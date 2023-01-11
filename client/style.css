@@ -5,3 +5,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+h1 {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  /* translate(-50%, -50%) */
+}
