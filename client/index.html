@@ -6,12 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
     <script src="./main.js"></script>
-    <title>Document</title>
+    <title>Calculator</title>
   </head>
   <body>
-    <h1>
-      <span>hello</span>
-      <span>world</span>
-    </h1>
+    <form class="calculator">
+      <div class="first">
+        <label for="firstNumber">First Value</label>
+        <input type="number" name="first" id="firstNumber" required />
+      </div>
+
+      <div class="operator">+</div>
+
+      <div class="second">
+        <label for="secondNumber">Second Value</label>
+        <input type="number" name="second" id="secondNumber" required />
+      </div>
+
+      <input id="done" type="submit" value="done" />
+
+      <div class="result">-</div>
+    </form>
   </body>
 </html>
