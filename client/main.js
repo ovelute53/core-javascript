@@ -13,6 +13,10 @@ import {
   addClass,
   removeClass,
   toggleClass,
+  insertBefore,
+  insertAfter,
+  insertFirst,
+  insertLast,
 } from "./lib/index.js";
 
 const firstInput = getNode("#firstNumber");
