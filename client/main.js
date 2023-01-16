@@ -1,4 +1,7 @@
+/* global gsap */
+
 import {
+  copy,
   clearContents,
   getInputValue,
   getNode,
@@ -6,6 +9,9 @@ import {
   insertLast,
   isNumericString,
   showAlert,
+  addClass,
+  toggleClass,
+  removeClass,
 } from "./lib/index.js";
 import { jujeobData } from "./data/data.js";
 const submit = getNode("#submit");
@@ -20,13 +26,28 @@ function clickSubmitHandler(e) {
 
   if (!name) {
     console.log("이름을 입력해주세요");
-    showAlert(".alert", "올바른 정보를 입력해주세요", 2000);
+    showAlert(".alert-error", "올바른 정보를 입력해주세요", 2000);
+    // addClass(resultArea, "shake");
+    // // css 파일에서 만들어준 값을 불러온다
+    // setTimeout(() => {
+    //   removeClass(resultArea, "shake");
+    // }, 1000);
+
+    //GSAP을 이용한 방법
+
+    gsap.fromTo(
+      resultArea,
+      0.01,
+      { x: -5 },
+      { x: 5, clearProps: "x", repeat: 20 }
+    );
+
     return;
   }
 
   if (isNumericString(name)) {
     console.log("제대로 된 이름을 입력해주세요");
-    showAlert(".alert", "문자를 입력해주세요", 3000);
+    showAlert(".alert-error", "문자를 입력해주세요", 2000);
     return;
   }
 
@@ -34,4 +55,13 @@ function clickSubmitHandler(e) {
   insertLast(resultArea, pick);
 }
 
+function clickCopyHandler() {
+  let copyPaste = resultArea.textContent;
+  copy(copyPaste).then(() => {
+    showAlert(".alert-success", "클립보드에 복사되었습니다.", 2000);
+  });
+  // copyPaste가 실행이 잘 되도록 약속(promise)하고 then(그리고 나서) 클립보드에 복사되었다고 알려줄게!
+}
+
 submit.addEventListener("click", clickSubmitHandler);
+resultArea.addEventListener("click", clickCopyHandler);
