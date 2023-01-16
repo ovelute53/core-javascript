@@ -1,4 +1,4 @@
-import { typeError } from "./../error/typeError.js";
+import { typeError } from "../error/typeError.js";
 
 export function getRandom(n) {
   if (!n) typeError("getRandom함수는 1개 이상의 매개변수를 받아야 합니다.");
