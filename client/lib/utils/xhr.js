@@ -8,7 +8,7 @@
 
 //xhrData 함수 만들기 method, url
 
-function xhrData({
+export function xhrData({
   url = "",
   method = "GET",
   body = "null",
@@ -91,7 +91,6 @@ xhrData.put = (url, body, onSuccess, onFail) => {
 xhrData.delete = (url, body, onSuccess, onFail) => {
   xhrData({
     method: "DELETE",
-    body,
     url,
     onSuccess,
     onFail,
