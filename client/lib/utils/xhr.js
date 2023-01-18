@@ -6,6 +6,8 @@
 4: complete 완료
 */
 
+import { typeError } from "../error/typeError.js";
+
 //xhrData 함수 만들기 method, url
 
 export function xhrData({
@@ -35,10 +37,10 @@ export function xhrData({
     const { status, readyState, response } = xhr; //객체 구조 분해 할당
     if (status >= 200 && status < 400) {
       if (readyState === 4) {
-        console.log("통신 성공");
+        // console.log("통신 성공");
 
         onSuccess(JSON.parse(response));
-        console.log();
+        // console.log();
       }
     } else {
       // console.error("통신 실패");
@@ -100,10 +102,10 @@ xhrData.delete = (url, body, onSuccess, onFail) => {
 xhrData.get(
   "https://jsonplaceholder.typicode.com/users",
   (result) => {
-    console.log(result);
+    // console.log(result);
   },
   (err) => {
-    console.log(err);
+    // console.log(err);
   }
 );
 
@@ -132,10 +134,10 @@ xhrData.post(
     },
   },
   (result) => {
-    console.log(result);
+    // console.log(result);
   },
   (err) => {
-    console.log(err);
+    // console.log(err);
   }
 );
 // xhrData("POST", "https://jsonplaceholder.typicode.com/users", {
@@ -153,3 +155,98 @@ xhrData.post(
 //     lng: "81.1496",
 //   },
 // });
+
+// promise API
+
+const defaultOptions = {
+  url: "",
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
+  body: null,
+};
+
+export function xhrPromise(options = {}) {
+  const xhr = new XMLHttpRequest();
+
+  const { method, url, body, headers } = Object.assign(
+    {},
+    defaultOptions,
+    options
+  );
+
+  if (!url) typeError("서버와 통신할 url 인자는 반드시 필요합니다");
+
+  xhr.open(method, url);
+
+  xhr.send(body ? JSON.stringify(body) : null);
+  // 아래 return 때문에 promise아래 써주면 무시되서 위로 올려놓음
+
+  return new Promise((resolve, reject) => {
+    xhr.addEventListener("readystatechange", () => {
+      const { status, readyState, response } = xhr;
+
+      if (status >= 200 && status < 400) {
+        if (readyState === 4) {
+          resolve(JSON.parse(response));
+        } else {
+          reject("ERROR");
+        }
+      }
+    });
+  });
+}
+
+// xhrPromise({ url: "https://jsonplaceholder.typicode.com/users/1" })
+//   .then((res) => {
+//     console.log(res);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
+xhrPromise.get = (url) => {
+  return xhrPromise({
+    url,
+  });
+};
+
+xhrPromise.post = (url, body) => {
+  return xhrPromise({
+    url,
+    body,
+    method: "POST",
+  });
+};
+
+xhrPromise.put = (url, body) => {
+  return xhrPromise({
+    url,
+    body,
+    method: "PUT",
+  });
+};
+
+xhrPromise.delete = (url) => {
+  return xhrPromise({
+    url,
+    method: "DELETE",
+  });
+};
+
+// xhrPromise.get = (url) => {
+//   return xhrPromise({
+//     url,
+//   });
+// };
+
+// xhrPromise
+//   .get("www.naver.com") // promise
+//   .then((res) => {
+//     console.log(res);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });

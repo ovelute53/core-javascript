@@ -14,3 +14,19 @@ h1 {
   text-align: center;
   /* translate(-50%, -50%) */
 }
+
+.first {
+  display: inline-block;
+  position: relative;
+  left: 0;
+  top: 0;
+  transition: all 1s;
+}
+
+.second {
+  display: inline-block;
+  position: relative;
+  left: 0;
+  top: 0;
+  transition: all 1s cubic-bezier(1, -0.82, 0.165, 1);
+}
