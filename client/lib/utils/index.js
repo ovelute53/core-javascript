@@ -3,3 +3,5 @@ export * from "./memo.js";
 export * from "./typeOf.js";
 export * from "./xhr.js";
 export * from "./delay.js";
+export * from "./lol.js";
+export * from "./theme.js";
